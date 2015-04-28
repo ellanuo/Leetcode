@@ -4,6 +4,7 @@ For example:
 Given 1->2->3->4->5->NULL and k = 2,
 return 4->5->1->2->3->NULL. */
 
+// Pay attention to the special cases, the linkedList does not need to be changed
 
 
 /**
