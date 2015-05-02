@@ -31,7 +31,7 @@ public class Solution {
         
     }
     
-   // Method 3:( Normal way, O(n) time cost, O(k % nums.length) space cost)
+   
     private void reverse(int [] nums, int start, int end)
     {
         while(start<end)
@@ -43,7 +43,7 @@ public class Solution {
     }
 }
 
-
+// Method 3:( Normal way, O(n) time cost, O(k % nums.length) space cost)
 public class Solution {
     public void rotate(int[] nums, int k) {
         if(nums==null || nums.length<=1 )
