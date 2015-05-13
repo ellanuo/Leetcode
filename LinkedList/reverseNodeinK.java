@@ -62,3 +62,40 @@ public class Solution {
         return dummy.next;
     }
 }
+
+
+public class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null) {
+            return head;
+        }
+
+        ListNode tail = head;
+
+        for (int i = 1; i < k; i ++) {
+            tail = tail.next;
+
+            if (tail == null) {
+                return head;
+            }
+        }
+
+        ListNode nextRoundHead = tail.next;
+
+        ListNode second = head.next;
+        ListNode first = head;
+
+        //reserve the k node group
+        for (int i = 1; i < k; i ++) {
+            ListNode newSecond = second.next;
+            second.next = first;
+
+            first = second;
+            second = newSecond;
+        }
+
+        head.next = reverseKGroup(nextRoundHead, k);
+
+        return tail;
+    }
+}
