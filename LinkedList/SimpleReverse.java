@@ -26,3 +26,22 @@ public class Solution {
         
     }
 }
+
+
+public class Solution {
+    public ListNode reverseList(ListNode head) {
+       if(head==null || head.next==null)
+       {
+           return head;
+       }
+       
+       ListNode rest=head.next;
+       head.next=null;
+       
+       ListNode secondHead=reverseList(rest);
+       rest.next=head;
+       
+       return secondHead;
+        
+    }
+}
