@@ -67,5 +67,12 @@ public long divideLong(long dividend, long divisor) {
 }
 
 
+//int的绝对值，int里面有一个特殊的数字：-2147483648，
+//它的绝对值或者相反数 2147483648是超出int的范围的，对于这一情况需要特殊处理。
+//所以不能直接调用 divide(-dividend, divisor)或者divide(dividend, – divisor)。也不能写 int dv = abs(dividend)。
+//处理方式是使用long long来保存其绝对值
+
+
+http://wp.javayu.me/2014/02/divide-two-integers/
 
 
