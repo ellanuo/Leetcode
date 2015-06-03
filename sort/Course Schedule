@@ -1,0 +1,67 @@
+There are a total of n courses you have to take, labeled from 0 to n - 1.
+
+Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
+
+Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
+
+For example:
+
+2, [[1,0]]
+There are a total of 2 courses to take. To take course 1 you should have finished course 0. So it is possible.
+
+2, [[1,0],[0,1]]
+There are a total of 2 courses to take. To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.
+
+Note:
+The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is represented.
+
+/ *My solution does not involve DFS. It is regular topological sort.
+
+Create a set to store all vertices with 0 in-degree, and an array to store each vertex's in-degree.
+
+Then check if there is a cycle. If yes, return false, otherwise return true.
+
+After that, select a random vertex with 0 in-degree from set. Use it to relax other vertices, i.e. reduce other vertices' in-degree by 1 if there is an edge coming from that vertex. Furthermore, if any vertex has 0 in-degree after relax, add it to set.
+
+Repeat step above until set becomes empty. */
+
+public class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        if(prerequisites==null || prerequisites.length==0 || prerequisites[0].length==0)
+            return true;
+       HashSet<Integer> set = new HashSet<Integer>();   //set is to store nodes with 0 in-degree
+       int [] degree = new int[numCourses];
+       for(int i=0; i<prerequisites.length;i++)
+            degree[prerequisites[i][0]]++;
+        for(int i=0; i<numCourses;i++)
+        {
+            if(degree[i]==0)
+                set.add(i);
+        }
+        if(set.isEmpty())
+            return false;
+        while(!set.isEmpty())
+        {
+            Iterator<Integer> it = set.iterator();
+            int course = it.next();
+            set.remove(course);
+            for(int i=0; i<prerequisites.length;i++)
+            {
+                if(prerequisites[i][1]==course)
+                {
+                    degree[prerequisites[i][0]]--;
+                    if(degree[prerequisites[i][0]]==0)
+                        set.add(prerequisites[i][0]);
+                }
+                
+            }
+        }
+        
+        for(int i=0; i<numCourses;i++)
+            if(degree[i]!=0)
+                return false;
+            
+        return true;
+       
+    }
+}
