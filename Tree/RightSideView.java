@@ -46,3 +46,25 @@ public class Solution {
     }
 }
 
+//recursive
+public class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> list = new ArrayList<Integer>();
+        if(root==null)
+            return list;
+        show(root, 1, list);
+        return list;
+    }
+    
+    private void show(TreeNode root, int level, List<Integer> list)
+    {
+        if(root==null)
+            return;
+        if(level>list.size())
+            list.add(root.val);
+        
+        show(root.right, level+1, list);
+        show(root.left, level+1, list);
+        
+    }
+}
