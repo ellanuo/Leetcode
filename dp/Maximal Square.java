@@ -1,4 +1,4 @@
-Given a 2D binary matrix filled with 0's and 1's, find the largest square containing all 1's and return its area.
+/* Given a 2D binary matrix filled with 0's and 1's, find the largest square containing all 1's and return its area.
 
 For example, given the following matrix:
 
@@ -7,7 +7,7 @@ For example, given the following matrix:
 1 1 1 1 1
 1 0 0 1 0
 Return 4.
-Credits:
+Credits: */
 
 
 public class Solution {
@@ -53,14 +53,14 @@ public class Solution {
 }
 
 
-https://leetcode.com/discuss/38751/java-solution-simple-and-easy-understand-with-explanation
+/* https://leetcode.com/discuss/38751/java-solution-simple-and-easy-understand-with-explanation
 analysis
 
 
 t's actually to keep recording the max n*n window at each cell of the matrix. 
 At each cell, we define that the dynamic programming status at that cell is - if 
 I am the most right-bottom guy of a square, how big the square I can build. With this definition, 
-this status will be transferrable to the guys, left, below, and right below me.
+this status will be transferrable to the guys, left, below, and right below me. */
 
 
 public class Solution {
