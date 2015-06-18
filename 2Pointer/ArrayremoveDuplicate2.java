@@ -33,7 +33,7 @@ public class Solution {
                 {
                     count++; //count is 2
                 }
-                A[i++]=A[j];
+                A[i++]=A[j];   // cannot move element before check count, since it may change the content of array
             }
             
         }
