@@ -49,5 +49,55 @@ public class Solution {
                 }
             }
         }
+        
+        return dummy.next;
       }
     }
+    
+    
+    
+    public class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+       if(head==null||head.next==null)
+        return head;
+        
+        ListNode dummy = new ListNode(Integer.MIN_VALUE);
+        dummy.next=head;
+        boolean flag=true;
+        
+        ListNode pre = dummy;
+        ListNode cur = head;
+        
+        while(cur!=null && cur.next!=null)
+        {
+            if(cur.val==cur.next.val)
+            {
+                cur.next=cur.next.next;
+                flag=false;
+            }
+            
+            else if(cur.val!=cur.next.val && !flag)
+            {
+                pre.next=cur.next;
+                cur=cur.next;
+                flag=true;
+            }
+            
+            else
+            {
+                pre=cur;
+                cur=cur.next;
+            }
+        }
+        if(cur.next==null && !flag)
+            pre.next=null;
+        
+        return dummy.next;
+    }
+}
+    
+    
+    
+    
+    
+    
