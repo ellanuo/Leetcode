@@ -109,3 +109,44 @@ public class Solution {
         return dummy.next;
     }
 }
+
+
+public class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if(head==null || head.next==null || m==n)
+            return head;
+            
+        ListNode dummy = new ListNode (Integer.MIN_VALUE);
+        dummy.next=head;
+        
+        ListNode p=dummy;
+        int i=1;
+        while(p.next!=null && i<m )
+        {
+            p=p.next;
+            i++;
+        }
+        
+       // if(cur)
+        ListNode cur=p.next;  // if cur==null?
+        ListNode result=null;
+        
+        while(i<=n)
+        {
+            ListNode tmp=cur.next;
+            cur.next=result;
+            result=cur;
+            cur=tmp;
+            i++;
+        }
+        
+        p.next.next=cur;
+        p.next=result;
+        
+       return dummy.next;
+    }
+}
+
+
+
+
