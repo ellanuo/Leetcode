@@ -35,3 +35,33 @@ public class Solution {
         
     }
 }
+
+public class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices==null || prices.length==0)
+            return 0;
+        
+        int sum=0;
+        int max=0;
+        int min=prices[0];
+        
+        for(int i=1; i<prices.length;i++)
+        {
+            min=Math.min(min, prices[i-1]);
+            max=Math.max(max, prices[i]-min);
+            
+            if(prices[i]<prices[i-1] && max>0)
+            {
+                sum+=max;
+                max=0;
+                min=prices[i];
+            }
+        }
+        
+        sum+=max;
+        return sum;
+    }
+}
+
+
+
