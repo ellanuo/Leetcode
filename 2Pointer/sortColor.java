@@ -7,6 +7,11 @@ Note:
 You are not suppose to use the library's sort function for this problem. */
 
 
+// <l '0'   (0, l)
+// >r '2'    (l, size-1]
+//>=l && <cur '1'  [l, cur)
+// >=cur && <=r unsort  [cur, r]
+
 public class Solution {
     public void sortColors(int[] nums) {
         if(nums==null || nums.length<=1)
