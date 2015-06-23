@@ -15,8 +15,8 @@ public boolean isOneEditDistance(String s, String t) {
    if (n - m > 1) return false;
    int i = 0, shift = n - m;
    while (i < m && s.charAt(i) == t.charAt(i)) i++;
-   if (i == m) return shift > 0;
-   if (shift == 0) i++;
-   while (i < m && s.charAt(i) == t.charAt(i + shift)) i++;
+   if (i == m) return shift > 0;      //append
+   if (shift == 0) i++;               //modify
+   while (i < m && s.charAt(i) == t.charAt(i + shift)) i++;   //insert or modify
    return i == m;
 }
