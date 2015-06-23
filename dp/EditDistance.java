@@ -11,6 +11,7 @@ b) Delete a character
 c) Replace a character */
 
 
+http://fisherlei.blogspot.com/2012/12/leetcode-edit-distance.html
 public class Solution {
     public int minDistance(String word1, String word2) {
         if(word1==null || word2==null)
