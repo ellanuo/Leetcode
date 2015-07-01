@@ -2,10 +2,7 @@ public class LRUCache {
     private int capacity;
     private int size;
     
-    HashMap<Integer, ListNode> map = new HashMap<Integer, ListNode>();
-    ListNode head=null;
-    ListNode tail=null;
-    
+   
     private void setHead(ListNode node)
     {
         if(head==null && tail==null)
@@ -47,6 +44,10 @@ public class LRUCache {
     public LRUCache(int capacity) {
         this.capacity=capacity;
         size=0;
+    HashMap<Integer, ListNode> map = new HashMap<Integer, ListNode>();
+    ListNode head=null;
+    ListNode tail=null;
+    
     }
     
     public int get(int key) {
@@ -117,7 +118,7 @@ public class LRUCache {
         int value;
         ListNode prev;
         ListNode next;
-        ListNode(int key, int value)
+       public ListNode(int key, int value)
         {
             this.key=key;
             this.value=value;
