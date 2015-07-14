@@ -1,0 +1,35 @@
+Finding k-largest elements of a very large file (while k is very LARGE)
+
+up vote
+4
+down vote
+You can do this pretty easily with a standard merge type algorithm.
+
+Say you have 100 billion numbers and you want the top 10 billion. We'll say you can hold 1 billion numbers in memory at any time.
+
+So you make a pass:
+
+while not end of input
+    read 1 billion numbers
+    sort them in descending order
+    save position of output file
+    write sorted numbers to output file
+You then have a file that contains 100 blocks of 1 billion numbers each. Each block is sorted in descending order.
+
+Now create a max heap. Add the first number of each block to the heap. You'll also have to add the block number or the number's position in the file so that you can read the next number.
+
+Then:
+
+while num_selected < 10 billion
+    selected = heap.remove()
+    ++num_selected
+    write selected to output
+    read next number from the selected block and place on heap
+There's a small bit of complexity involved, keeping track of which block the number came from, but it's not too bad.
+
+The max heap never contains more than 100 items (basically, one item per block), so memory isn't an issue in the second pass. With a bit of work, you can avoid a lot of reads by creating a smallish buffer for each block so that you don't incur the cost of a disk read for every number that's selected.
+
+It's basically just a disk merge sort, but with an early out.
+
+Complexity of the first pass is b * (m log m), where b is the number of blocks and m is the number of items in a block. N, the total number of items in the file, is equal to b * m. Complexity of the second pass is k log b, where k is the number of items to select and b is the number of blocks.
+
