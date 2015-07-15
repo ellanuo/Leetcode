@@ -49,6 +49,7 @@ public static int findKth(int A[], int B[], int k,
 
 }
 
+----------------------------------------------------------------------------------
 Base cases:
 The smaller array has only one element
 Case 1: N = 1, M = 1.
@@ -225,8 +226,119 @@ int main()
 
 http://www.geeksforgeeks.org/median-of-two-sorted-arrays-of-different-sizes/
 
+---------------------------------------------------------------------------------
+public class Solution{
+    public static double findMedianSortedArrays(int A[], int B[]) {
+        //int lenA=A.length;
+        if(A==null || A.length==0)
+            return getMed(B,0,B.length-1);
+        if(B==null || B.length==0)
+            return getMed(A, 0, A.length-1);
+	 
+	return findMedianHelper(A, 0, A.length-1, B, 0, B.length-1);
+ }
+	 
+	 private static double getMedianinThree(int a, int b, int c)
+	 {
+	     int sum=a+b+c;
+	     return (double)(sum-Math.max(a, Math.max(b,c))-Math.min(a, Math.min(b,c)));
+	 }
+	 
+	 private static double getMedinFour(int a, int b, int c, int d)
+	 {
+	     int result=a+b+c+d;
+	     result-=Math.max(Math.max(a,b), Math.max(c,d));
+	     result-=Math.min(Math.min(a,b),Math.min(c,d));
+	     
+	     return 0.5*result;
+	 }
+	 
+	 private static double getMed(int A[], int start, int end)
+	 {
+	     if((end-start+1)%2==1)
+	        return A[(start+end)/2];
+	     else
+	        return 0.5*(A[(start+end)/2]+A[(start+end)/2+1]);
+	 } 
+	 
+/*	 private static int findMiddle(int s, int e)
+	 {
+	     return ((e-s+1)%2==1)? (s+e)/2
+	 } */
+	 
+	 private static double findMedianHelper(int A[], int sA, int eA, int B[], int sB, int eB)
+	 {
+	     int lenA=eA-sA+1;
+	     int lenB=eB-sB+1;
+	     
+	     if(lenA>lenB)
+	        return findMedianHelper(B, sB, eB, A, sA, eA);
+	     if(lenA==1)
+	     {
+	         if(lenB==1)
+	            return 0.5*(A[sA]+B[sB]);
+	         if(lenB==2)
+	            return getMedianinThree(A[sA], B[sB], B[eB]);
+	       
+	          else if(lenB%2==1)
+	          {
+	              int mid_pos=(sB+eB)/2;
+	              double mid = getMedianinThree(A[sA], B[mid_pos-1], B[mid_pos+1]);
+	              return 0.5*(mid+B[mid_pos]);
+	          }
+	          else
+	          {
+	              int mid_pos=(sB+eB)/2;
+	              return getMedianinThree(A[sA],B[mid_pos],B[mid_pos+1]);
+	          }
+	            
+	     }
+	     else if(lenA==2)
+	     {
+	         if(lenB==2)
+	            return getMedinFour(A[sA],A[eA],B[sB],B[eB]);
+	         else if(lenB%2==1)
+	         {
+	             int mid_pos=(sB+eB)/2; // middle
+	             return getMedianinThree(B[mid_pos], Math.max(A[sA],B[mid_pos-1]),Math.min(A[eA],B[mid_pos+1]));
+	         }
+	         else
+	         {
+	             int mid_pos=(sB+eB)/2;
+	             return getMedinFour(Math.max(A[sA], B[mid_pos-1]), B[mid_pos], B[mid_pos+1], Math.min(A[eA],B[mid_pos+2]));
+	         }
+	     }
+	     
+	     else
+	     {
+	         /* 
+	            Don't need to get the real median, just find the first middle element, 
+	            remove equal number of elements from two array
+	         */
+	         int mid_A=(sA+eA)/2;
+	         int mid_B=(sB+eB)/2;
+	         //double midA=getMed(A,sA,eA);
+	         //double midB= getMed(B, sB, eB);
+	         
+	         if(A[mid_A]>B[mid_B])
+	           // return findMedianHelper(A, sA, (sA+eA)/2, B, (eB-sB+1)%2==1? (eB+sB)/2: (eB+sB)/2+1, eB);
+	           return findMedianHelper(A,sA,lenA%2==1? mid_A:mid_A+1, B, lenA%2==1? sB+eA-mid_A:sB+eA-mid_A-1,eB);
+	          else
+	             //return findMedianHelper(A,(eA-sA+1)%2==1? (eA+sA)/2: (eA+sA)/2+1 , eA, B, sB, (sB+eB)/2); 
+	            return findMedianHelper(A, mid_A, eA, B, sB, eB-(mid_A-sA));
+	         
+	     }
+	 }
+}
 
 
+Testcase1
+[1,2,3]
+[4,5,6,7]
+
+Testcase2
+[1,3,7,8]
+[2,4,5,6]
 
 
 
