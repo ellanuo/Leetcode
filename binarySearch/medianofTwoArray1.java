@@ -93,8 +93,78 @@ int max(int x, int y)
 {
     return x > y? x : y;
 }
+
+
  
 int min(int x, int y)
 {
     return x > y? y : x;
 }
+
+//test
+ 1 3 7 8
+ 2 4 5 6
+ 
+ 
+ import java.lang.Math;
+
+public class findMedian
+{
+	private static double getMedian(int [] a, int start, int n)
+	{
+		return (n%2!=0)? (double)a[start+n/2]:(double)(a[start+n/2-1]+a[start+n/2])/2;
+	}
+
+	private static double findMedianHelper(int [] A, int [] B, int startA, int startB, int n)
+	{
+		if(n==1)
+			return (double)(A[startA]+B[startB])/2;
+		if(n==2)
+			return (double)(Math.max(A[startA],B[startB])+Math.min(A[startA+1],B[startB+1]))/2;
+
+		//else
+		//{
+			double midA=getMedian(A, startA, n);
+			double midB=getMedian(B, startB, n);
+			System.out.println(midA+" "+midB);
+			if(midA==midB)
+				return midA;
+			if(midA<midB)  //get right part of A, left part of B
+			{
+				if(n%2==1)
+					return findMedianHelper(A, B, startA+n/2, startB, n-n/2); // the subarray will include medA, [midA-endA], [startB-midB]
+				else
+					return findMedianHelper(A, B, startA+n/2-1, startB, n-n/2+1); //the subarray will include medA2 (midA1<=midA<=midA2) [midA2-endA], [startB-midB]
+			}
+			else
+			{
+				if(n%2==1)
+					return findMedianHelper(A, B, startA, startB+n/2, n-n/2);
+				else
+					return findMedianHelper(A, B, startA, startB+n/2-1, n-n/2+1);
+			}
+
+		//}
+	}
+
+
+	public static  double findMedianinArray(int [] A, int [] B, int n)
+	{
+		return findMedianHelper(A, B, 0, 0, n);
+	}
+
+	public static void main(String[] argv )
+	{
+		int [] A = new int []{1,3,7,8};
+		int [] B = new int []{2,4,5,6};
+
+		double mid = findMedianinArray(A, B, 4);
+		System.out.println(mid);
+
+
+	}
+}
+ 
+ 
+ 
+ 
