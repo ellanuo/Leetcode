@@ -1,0 +1,75 @@
+给定一个整数N，一个整数array，问把这个array里数字的倍数从1~N中去除，剩下几个数字。
+只要个数不要具体剩哪些；N可能会有10^9量级。感觉是用容斥原理
+
+http://blog.csdn.net/xianglunxi/article/details/9310105
+求指定区间内与n互素的数的个数：
+       给出整数n和r。求区间[1;r]中与n互素的数的个数。
+         去解决它的逆问题，求不与n互素的数的个数。
+         考虑n的所有素因子pi(i=1…k)
+         在[1;r]中有多少数能被pi整除呢？它就是：
+       
+         然而，如果我们单纯将所有结果相加，会得到错误答案。有些数可能被统计多次（被好几个素因子整除）。所以，我们要运用容斥原理来解决。
+         我们可以用2^k的算法求出所有的pi组合，然后计算每种组合的pi乘积，通过容斥原理来对结果进行加减处理。
+         关于此问题的最终实现：
+         
+         
+         int solve (int n, int r) {
+
+        vector<int> p;
+
+        for (int i=2; i*i<=n; ++i)
+
+               if (n % i == 0) {
+
+                       p.push_back (i);
+
+                       while (n % i == 0)
+
+                               n /= i;
+
+               }
+
+        if (n > 1)
+
+               p.push_back (n);
+
+ 
+
+        int sum = 0;
+
+        for (int msk=1; msk<(1<<p.size()); ++msk) {
+
+               int mult = 1,
+
+                       bits = 0;
+
+               for (int i=0; i<(int)p.size(); ++i)
+
+                       if (msk & (1<<i)) {
+
+                               ++bits;
+
+                               mult *= p[i];
+
+                       }
+
+ 
+
+               int cur = r / mult;
+
+               if (bits % 2 == 1)
+
+                       sum += cur;
+
+               else
+
+                       sum -= cur;
+
+        }
+
+ 
+
+        return r - sum;
+
+}
+
